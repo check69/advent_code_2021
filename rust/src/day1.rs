@@ -1,5 +1,8 @@
 //'a means the life time of that variable will live. 'a it's a generic lifetime that its decided by the compiler.
-fn count_increased_measures<'a>(measures: impl Iterator<Item = &'a usize> + Clone, skip: usize) -> usize {
+fn count_increased_measures<'a>(
+    measures: impl Iterator<Item = &'a usize> + Clone,
+    skip: usize,
+) -> usize {
     let iter1 = measures.clone();
     let iter2 = measures.skip(skip);
     iter1
@@ -31,7 +34,7 @@ mod test {
     use crate::utils;
     use std::path::Path;
 
-    use super::{how_many_increase, count_increased_measures};
+    use super::{count_increased_measures, how_many_increase};
 
     #[test]
     fn example1() {
@@ -63,7 +66,6 @@ mod test {
         let data: Vec<usize> = utils::read_data(Path::new("data/day1")).unwrap();
         let result = count_increased_measures(data.iter(), 1);
         println!("{}", result);
-
     }
 
     #[test]
@@ -71,6 +73,5 @@ mod test {
         let data: Vec<usize> = utils::read_data(Path::new("data/day1")).unwrap();
         let result = count_increased_measures(data.iter(), 3);
         println!("{}", result);
-
     }
 }

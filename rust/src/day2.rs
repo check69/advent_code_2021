@@ -1,8 +1,9 @@
-
-
 fn parse_command(command: String) -> (String, i32) {
     let mut iter = command.split(" ");
-    (iter.next().unwrap().to_string(), iter.next().unwrap().trim().parse().unwrap())
+    (
+        iter.next().unwrap().to_string(),
+        iter.next().unwrap().trim().parse().unwrap(),
+    )
 }
 
 #[cfg(test)]
@@ -21,11 +22,16 @@ mod test {
         for line in data {
             let (command, number) = parse_command(line);
             match command.as_str() {
-                "forward" => { horizontal += number; }
-                "down" => { depth += number; }
-                "up" => {depth -= number;}
+                "forward" => {
+                    horizontal += number;
+                }
+                "down" => {
+                    depth += number;
+                }
+                "up" => {
+                    depth -= number;
+                }
                 _ => {}
-
             }
         }
         println!("{}", horizontal * depth);
@@ -48,19 +54,18 @@ mod test {
                 "down" => {
                     aim += number;
                 }
-                "up" => {aim -= number;}
+                "up" => {
+                    aim -= number;
+                }
                 _ => {}
-
             }
         }
         println!("{}", horizontal * depth);
     }
 
     #[test]
-    fn example1_improve() {
-    }
+    fn example1_improve() {}
 
     #[test]
-    fn example2_improve() {
-    }
+    fn example2_improve() {}
 }
