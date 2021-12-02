@@ -1,4 +1,5 @@
-fn count_increased_measures(measures: impl Iterator<Item = usize> + Clone, skip: usize) -> usize {
+//'a means the life time of that variable will live. 'a it's a generic lifetime that its decided by the compiler.
+fn count_increased_measures<'a>(measures: impl Iterator<Item = &'a usize> + Clone, skip: usize) -> usize {
     let iter1 = measures.clone();
     let iter2 = measures.skip(skip);
     iter1
@@ -60,7 +61,7 @@ mod test {
     #[test]
     fn example1_improve() {
         let data: Vec<usize> = utils::read_data(Path::new("data/day1")).unwrap();
-        let result = count_increased_measures(data.iter().copied(), 1);
+        let result = count_increased_measures(data.iter(), 1);
         println!("{}", result);
 
     }
@@ -68,7 +69,7 @@ mod test {
     #[test]
     fn example2_improve() {
         let data: Vec<usize> = utils::read_data(Path::new("data/day1")).unwrap();
-        let result = count_increased_measures(data.iter().copied(), 3);
+        let result = count_increased_measures(data.iter(), 3);
         println!("{}", result);
 
     }
