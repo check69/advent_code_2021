@@ -150,7 +150,7 @@ impl Boards {
 
         None
     }
-    
+
     fn find_last_number(&mut self, number: usize) -> Option<Board> {
         let mut ret: Option<Board> = None;
         let mut remove_index: Vec<usize> = vec![];
@@ -214,8 +214,11 @@ mod test {
     fn example2() {
         let mut boards: Boards =
             Boards::from_reader(&mut get_lines(Path::new("data/day4")).unwrap()).unwrap();
-        
-        let mut board: Board = Board{numbers: vec![], marked_numbers: vec![]};
+
+        let mut board: Board = Board {
+            numbers: vec![],
+            marked_numbers: vec![],
+        };
         let mut the_number: usize = 0;
         for number in boards.numbers.clone() {
             match boards.find_last_number(number) {
