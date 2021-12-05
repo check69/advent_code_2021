@@ -14,7 +14,7 @@ impl FromStr for Binary {
         for c in command {
             trial.push(c as usize - 0x30);
         }
-        Ok(Binary{ numbers: trial})
+        Ok(Binary { numbers: trial })
     }
 }
 
@@ -38,8 +38,7 @@ fn find_all_occurrences_in_binary(data: &Vec<Binary>, index: usize) -> (Vec<Bina
     for binary in data {
         if binary.numbers[index] == 1 {
             ret1.push(binary.clone())
-        }
-        else {
+        } else {
             ret0.push(binary.clone())
         }
     }
@@ -48,7 +47,7 @@ fn find_all_occurrences_in_binary(data: &Vec<Binary>, index: usize) -> (Vec<Bina
 
 fn most_repeated(data: &Vec<Binary>) -> Binary {
     let (mut data1, mut data0) = find_all_occurrences_in_binary(&data, 0);
-    for index in 1.. data[0].numbers.len() {
+    for index in 1..data[0].numbers.len() {
         if data1.len() >= data0.len() {
             if data1.len() == 1 {
                 return data1[0].clone();
@@ -56,8 +55,7 @@ fn most_repeated(data: &Vec<Binary>) -> Binary {
             let (d1, d0) = find_all_occurrences_in_binary(&data1, index);
             data1 = d1;
             data0 = d0;
-        }
-        else {
+        } else {
             if data0.len() == 1 {
                 return data0[0].clone();
             }
@@ -71,7 +69,7 @@ fn most_repeated(data: &Vec<Binary>) -> Binary {
 
 fn less_repeated(data: &Vec<Binary>) -> Binary {
     let (mut data1, mut data0) = find_all_occurrences_in_binary(&data, 0);
-    for index in 1.. data[0].numbers.len() {
+    for index in 1..data[0].numbers.len() {
         if data1.len() < data0.len() {
             if data1.len() == 1 {
                 return data1[0].clone();
@@ -79,8 +77,7 @@ fn less_repeated(data: &Vec<Binary>) -> Binary {
             let (d1, d0) = find_all_occurrences_in_binary(&data1, index);
             data1 = d1;
             data0 = d0;
-        }
-        else {
+        } else {
             if data0.len() == 1 {
                 return data0[0].clone();
             }
@@ -94,11 +91,14 @@ fn less_repeated(data: &Vec<Binary>) -> Binary {
 
 #[cfg(test)]
 mod test {
-    use crate::{utils, day3::{most_repeated, less_repeated}};
+    use crate::{
+        day3::{less_repeated, most_repeated},
+        utils,
+    };
     use std::path::Path;
 
-    use super::{Binary, find_all_occurrences_in_binary};    
-    
+    use super::{find_all_occurrences_in_binary, Binary};
+
     #[test]
     fn example1() {
         let data: Vec<Binary> = utils::read_data(Path::new("data/day3")).unwrap();
@@ -136,15 +136,13 @@ mod test {
             if total > length {
                 number1 += 2_usize.pow(idx);
                 println!("{}", 2_usize.pow(idx));
-            }
-            else {
+            } else {
                 number2 += 2_usize.pow(idx);
             }
             idx += 1;
         }
         println!("{} * {}", number1, number2);
         println!("{}", number1 * number2);
-        
     }
 
     #[test]
