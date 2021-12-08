@@ -1,10 +1,11 @@
 use std::{
     collections::HashMap,
     fmt::{self, Display},
+    hash,
     iter::Map,
     ops::Range,
     str::FromStr,
-    vec, hash,
+    vec,
 };
 
 #[derive(Debug, Clone)]
@@ -37,37 +38,38 @@ impl FromStr for Signal {
 
 impl Signal {
     fn find_1_4_7_8_in_input(&self) -> Vec<String> {
-        let mut ret: Vec<String> = vec![];
-        for string in self.input.iter() {
-            if [2, 3, 4, 7].contains(&string.len()) {
-                ret.push(string.clone());
-            }
-        }
-
-        ret
+        self.input
+            .iter()
+            .cloned()
+            .filter(|s| [2, 3, 4, 7].contains(&s.len()))
+            .collect()
     }
 
     fn find_numbers(&mut self) {
         let mut strings_with_5_letters: Vec<String> = vec![];
         let mut strings_with_6_letters: Vec<String> = vec![];
         for string in self.input.iter() {
-            if string.len() == 5 {
-                strings_with_5_letters.push(string.clone());
-            }
-            else if string.len() == 6 {
-                strings_with_6_letters.push(string.clone());
-            }
-            else if string.len() == 2 {
-                self.mapping.insert(1, string.clone());
-            }
-            else if string.len() == 3 {
-                self.mapping.insert(7, string.clone());
-            }
-            else if string.len() == 4 {
-                self.mapping.insert(4, string.clone());
-            }
-            else if string.len() == 7 {
-                self.mapping.insert(8, string.clone());
+            let length = string.len();
+            match length {
+                5 => {
+                    strings_with_5_letters.push(string.clone());
+                }
+                6 => {
+                    strings_with_6_letters.push(string.clone());
+                }
+                2 => {
+                    self.mapping.insert(1, string.clone());
+                }
+                3 => {
+                    self.mapping.insert(7, string.clone());
+                }
+                4 => {
+                    self.mapping.insert(4, string.clone());
+                }
+                7 => {
+                    self.mapping.insert(8, string.clone());
+                }
+                default => {}
             }
         }
         self.find_6_letters_numbers(strings_with_6_letters);
@@ -76,13 +78,20 @@ impl Signal {
 
     fn find_5_letters_numbers(&mut self, strings: Vec<String>) {
         for string in strings {
-            if self.mapping.get(&1).unwrap().chars().all(| c | string.contains(c)) {
+            if self
+                .mapping
+                .get(&1)
+                .unwrap()
+                .chars()
+                .all(|c| string.contains(c))
+            {
                 self.mapping.insert(3, string.clone());
-            }
-            else if string.chars().all(| c | self.mapping.get(&6).unwrap().contains(c)) {
+            } else if string
+                .chars()
+                .all(|c| self.mapping.get(&6).unwrap().contains(c))
+            {
                 self.mapping.insert(5, string.clone());
-            }
-            else {
+            } else {
                 self.mapping.insert(2, string.clone());
             }
         }
@@ -90,13 +99,23 @@ impl Signal {
 
     fn find_6_letters_numbers(&mut self, strings: Vec<String>) {
         for string in strings {
-            if !self.mapping.get(&1).unwrap().chars().all(| c | string.contains(c)) {
+            if !self
+                .mapping
+                .get(&1)
+                .unwrap()
+                .chars()
+                .all(|c| string.contains(c))
+            {
                 self.mapping.insert(6, string.clone());
-            }
-            else if !self.mapping.get(&4).unwrap().chars().all(| c | string.contains(c)) {
+            } else if !self
+                .mapping
+                .get(&4)
+                .unwrap()
+                .chars()
+                .all(|c| string.contains(c))
+            {
                 self.mapping.insert(0, string.clone());
-            }
-            else {
+            } else {
                 self.mapping.insert(9, string.clone());
             }
         }
@@ -125,8 +144,7 @@ fn get_hashmap(s1: &String) -> HashMap<char, usize> {
     for letter in s1.chars() {
         if letters.contains_key(&letter) {
             *letters.get_mut(&letter).unwrap() += 1;
-        }
-        else {
+        } else {
             letters.insert(letter, 1);
         }
     }
@@ -135,7 +153,7 @@ fn get_hashmap(s1: &String) -> HashMap<char, usize> {
 }
 
 fn is_anagram(mut letters: HashMap<char, usize>, s2: &String) -> bool {
-    letters.len() == s2.len() && s2.chars().all(| character | letters.contains_key(&character))
+    letters.len() == s2.len() && s2.chars().all(|character| letters.contains_key(&character))
 }
 
 #[cfg(test)]
