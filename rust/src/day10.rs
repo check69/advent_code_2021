@@ -52,7 +52,6 @@ fn fill_uncomplete(line: &String) -> usize {
         }
     }
 
-    let mut y: usize = chunck_open.iter().rev().fold(0, | r |)
     let mut x = 0;
     for uncomplete in chunck_open.iter().rev() {
         x = if *uncomplete == '(' {
