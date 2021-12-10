@@ -1,5 +1,5 @@
 use core::num;
-use std::{str::FromStr, collections::HashSet};
+use std::{collections::HashSet, str::FromStr};
 
 struct Point {
     numbers: Vec<usize>,
@@ -22,31 +22,36 @@ impl FromStr for Point {
 fn check_number(numbers: Vec<Vec<usize>>, i: &usize, j: &usize) -> bool {
     let number: usize = numbers[*i][*j];
     if *i > 0_usize {
-        if number >= numbers[i-1][*j] {
+        if number >= numbers[i - 1][*j] {
             return false;
         }
     }
     if *i < numbers.len() - 1 {
-        if number >= numbers[i+1][*j] {
+        if number >= numbers[i + 1][*j] {
             return false;
         }
     }
     if *j > 0_usize {
-        if number >= numbers[*i][j-1] {
+        if number >= numbers[*i][j - 1] {
             return false;
         }
     }
     if *j < numbers[0].len() - 1 {
-        if number >= numbers[*i][j+1] {
+        if number >= numbers[*i][j + 1] {
             return false;
         }
     }
     true
 }
 
-fn recursive_adjacents(adjacents: &mut HashSet<(usize, usize)>, numbers: &Vec<Vec<usize>>, i: usize, j: usize) {
+fn recursive_adjacents(
+    adjacents: &mut HashSet<(usize, usize)>,
+    numbers: &Vec<Vec<usize>>,
+    i: usize,
+    j: usize,
+) {
     let (mut curr_i, mut curr_j) = (i, j);
-    if adjacents.contains(&(curr_i, curr_j)) || numbers[curr_i][curr_j] == 9{
+    if adjacents.contains(&(curr_i, curr_j)) || numbers[curr_i][curr_j] == 9 {
         return;
     }
     adjacents.insert((curr_i, curr_j));
@@ -155,12 +160,18 @@ mod test {
                 }
             }
         }
-        
+
         ret.sort();
         ret.reverse();
 
         println!("{:?}", ret);
-        println!("{} * {} * {} = {}", ret[0], ret[1], ret[2], ret[0] * ret[1] * ret[2] );
+        println!(
+            "{} * {} * {} = {}",
+            ret[0],
+            ret[1],
+            ret[2],
+            ret[0] * ret[1] * ret[2]
+        );
     }
 
     #[test]
@@ -180,11 +191,17 @@ mod test {
                 }
             }
         }
-        
+
         ret.sort();
         ret.reverse();
 
         println!("{:?}", ret);
-        println!("{} * {} * {} = {}", ret[0], ret[1], ret[2], ret[0] * ret[1] * ret[2] );
+        println!(
+            "{} * {} * {} = {}",
+            ret[0],
+            ret[1],
+            ret[2],
+            ret[0] * ret[1] * ret[2]
+        );
     }
 }
