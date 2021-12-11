@@ -51,39 +51,28 @@ fn fill_uncomplete(line: &String) -> usize {
         }
     }
 
-    let mut x = 0;
-    for uncomplete in chunck_open.iter().rev() {
-        x = if *uncomplete == '(' {
-            1
-        } else if *uncomplete == '[' {
-            2
-        } else if *uncomplete == '{' {
-            3
-        } else if *uncomplete == '<' {
-            4
-        } else {
-            unreachable!("paniquea")
-        }
-    }
-
-    total * 5 + x
+    chunck_open.iter().rev().fold(0, |acc, value| {
+        acc * 5
+            + match value {
+                '(' => 1,
+                '[' => 2,
+                '{' => 3,
+                '<' => 4,
+                _ => unreachable!("paniquea"),
+            }
+    })
 }
 
 fn sum_illegal_parts(illegals: Vec<char>) -> usize {
-    let mut total: usize = 0;
-    for character in illegals.iter() {
-        if *character == ')' {
-            total += 3;
-        } else if *character == ']' {
-            total += 57;
-        } else if *character == '}' {
-            total += 1197;
-        } else if *character == '>' {
-            total += 25137;
+    illegals.iter().fold(0, |acc, value| {
+        acc + match value {
+            ')' => 3,
+            ']' => 57,
+            '}' => 1197,
+            '>' => 25137,
+            _ => 0,
         }
-    }
-
-    total
+    })
 }
 
 #[cfg(test)]

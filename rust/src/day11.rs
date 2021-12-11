@@ -32,9 +32,12 @@ impl FromStr for HeatMap {
 
 impl HeatMap {
     fn first_step(&mut self) {
-        self.0
-            .iter_mut()
-            .for_each(|l| l.iter_mut().for_each(|l| {l.energy += 1; l.flash = false;}))
+        self.0.iter_mut().for_each(|l| {
+            l.iter_mut().for_each(|l| {
+                l.energy += 1;
+                l.flash = false;
+            })
+        })
     }
 
     fn flash_propagation(&mut self, row: isize, column: isize) {
@@ -72,7 +75,7 @@ impl HeatMap {
                     }
                 }
             }
-            if is_flashed == false{
+            if is_flashed == false {
                 break;
             }
         }
@@ -158,7 +161,7 @@ mod test {
             heatmap.first_step();
             if heatmap.flash() == 100 {
                 break;
-            } 
+            }
         }
 
         println!("{}", step);
@@ -175,7 +178,7 @@ mod test {
             heatmap.first_step();
             if heatmap.flash() == max_size {
                 break;
-            } 
+            }
         }
 
         println!("{}", step);
