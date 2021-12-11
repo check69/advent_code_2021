@@ -1,9 +1,13 @@
 use std::{
     fs::File,
-    io::{BufRead, BufReader, Result},
+    io::{self, BufRead, BufReader, Result},
     path::Path,
     str::FromStr,
 };
+
+pub fn open_file_read(path: &Path) -> io::Result<impl BufRead> {
+    Ok(BufReader::new(File::open(path)?))
+}
 
 pub fn get_lines(path: &Path) -> Result<BufReader<File>> {
     let f = File::open(path)?;

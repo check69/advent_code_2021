@@ -46,8 +46,7 @@ fn fill_uncomplete(line: &String) -> usize {
                         return total;
                     }
                 }
-                None => {
-                }
+                None => {}
             }
         }
     }
@@ -62,9 +61,10 @@ fn fill_uncomplete(line: &String) -> usize {
             3
         } else if *uncomplete == '<' {
             4
+        } else {
+            unreachable!("paniquea")
         }
-        else { unreachable!("paniquea") }
-    };
+    }
 
     total * 5 + x
 }
@@ -142,7 +142,7 @@ mod test {
         }
 
         ret.sort();
-        println!("{:?}", ret );
+        println!("{:?}", ret);
         assert_eq!(ret[(ret.len() - 1) / 2], 288957);
     }
 
@@ -167,6 +167,6 @@ mod test {
         }
 
         ret.sort();
-        println!("{:?}", ret[(ret.len() -1) / 2] );
+        println!("{:?}", ret[(ret.len() - 1) / 2]);
     }
 }
